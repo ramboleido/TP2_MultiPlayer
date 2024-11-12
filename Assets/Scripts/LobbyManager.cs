@@ -1,66 +1,53 @@
-using JetBrains.Annotations;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using ParrelSync;
+using TMPro;
+using JetBrains.Annotations;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-
-    private string gameVersion = "1.0.0";
+    [SerializeField] private List<GameObject> _playersPanels;
+    [SerializeField] private TMP_Text _textPlayerCount;
+    int _playersCount;
 
     private void Awake()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        
+        ChecaJogadores();
+    }
+
+    private void Update()
+    {
+        ChecaJogadores();
+    }
+
+    private void ChecaJogadores()
+    {
+        _playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        if( _playersCount <= 0)
+        {
+            return;
+        }
+
+        _textPlayerCount.text = _playersCount.ToString();
+
+        for(int i = 0; i < _playersCount; i++)
+        {
+            _playersPanels[i].SetActive(true);
+        }
 
         
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public void StartGame()
     {
-        Conectar();
-    }
-
-    private void Conectar()
-    {
-        if (PhotonNetwork.IsConnected) 
-        {
-            PhotonNetwork.JoinRandomRoom();
-
-        }
-        else 
-        {
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("Conectado ao Photon Master Server");
-        PhotonNetwork.JoinRandomRoom();
-    }
-
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("Falha ao entrar em sala aleatória, criando nova sala");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 }); 
-
-
-    }
-
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Entrou na sala com sucesso");
-        Debug.Log("Id: " + PhotonNetwork.CurrentRoom.Name);
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("GameScene");
         }
-
     }
 }

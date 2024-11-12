@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lobby.unity
     guid: 01009e6960e9ecc4c92b9ec653750f80
   - enabled: 1
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreateGame.unity
     guid: ed6a0538fe721a0418f30b2d4c39df5d
+  - enabled: 1
+    path: Assets/Scenes/LobbyGame.unity
+    guid: b0fcbf61f390b2045805da9b12d7f018
   m_configObjects: {}
