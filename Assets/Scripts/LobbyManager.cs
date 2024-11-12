@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using ParrelSync;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -47,17 +48,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Falha ao entrar em sala aleatória, criando nova sala");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 }); 
+
+
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Entrou na sala com sucesso");
         Debug.Log("Id: " + PhotonNetwork.CurrentRoom.Name);
-
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 1) 
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             PhotonNetwork.LoadLevel("GameScene");
         }
+
     }
 }
