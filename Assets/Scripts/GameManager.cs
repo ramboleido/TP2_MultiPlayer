@@ -14,19 +14,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (playerPrefab == null) 
-        {
-            Debug.Log("Prefab do jogador não está definido no GameManager");
-        }
-        else
+        if (PlayerController.LocalPlayerInstance == null) 
         {
             PhotonNetwork.Instantiate("Prefabs/" + playerPrefab.name, playerSpawnerPosition.position, Quaternion.identity);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+
     }
 }
