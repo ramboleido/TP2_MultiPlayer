@@ -11,7 +11,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private List<GameObject> _playersPanels;
     [SerializeField] private TMP_Text _textPlayerCount;
-    int _playersCount;
+    int _playersCount = 2;
+    
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        _textPlayerCount.text = _playersCount.ToString();
+        _textPlayerCount.text = "Jogadores na sala: " + _playersCount.ToString();
 
         for(int i = 0; i < _playersCount; i++)
         {
